@@ -1,7 +1,6 @@
-import React from 'react';
 import { Home, Building2, Palette, Wrench, MessageSquare, Lightbulb } from 'lucide-react';
 
-const Services: React.FC = () => {
+const Services = () => {
   const services = [
     {
       icon: Home,

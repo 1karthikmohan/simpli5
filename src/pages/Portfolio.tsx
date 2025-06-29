@@ -1,7 +1,6 @@
-import React from 'react';
 import { ExternalLink, Calendar, MapPin } from 'lucide-react';
 
-const Portfolio: React.FC = () => {
+const Portfolio = () => {
   const projects = [
     {
       id: 1,

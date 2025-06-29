@@ -1,7 +1,6 @@
-import React from 'react';
 import { Award, Users, Target, Heart } from 'lucide-react';
 
-const About: React.FC = () => {
+const About = () => {
   return (
     <div className="pt-16">
       {/* Hero Section */}

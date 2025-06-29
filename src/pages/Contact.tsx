@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, MessageCircle, Send } from 'lucide-react';
 
-const Contact: React.FC = () => {
+const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',

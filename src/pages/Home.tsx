@@ -1,8 +1,7 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Award, Users, Building, Lightbulb } from 'lucide-react';
 
-const Home: React.FC = () => {
+const Home = () => {
   return (
     <div className="pt-16">
       {/* Hero Section */}
