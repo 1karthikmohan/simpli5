@@ -1,6 +1,7 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, MapPin, User, Wrench, ExternalLink } from 'lucide-react';
 import { getProjectById, getProjectImagePath } from '../data/projects';
+import Navbar from '../components/Navbar';
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -12,9 +13,11 @@ const ProjectDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-800">
-      {/* Sticky Header with Back Button */}
-      <div className="sticky top-0 z-40 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-700">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-800 pt-16">
+      <Navbar />
+      
+      {/* Back Button Section */}
+      <div className="bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <Link
             to="/portfolio"
@@ -97,7 +100,7 @@ const ProjectDetail = () => {
               </section>
 
               {/* Main Description */}
-              <article className="prose prose-lg dark:prose-invert max-w-none">
+              <article className="prose prose-lg dark:prose-invert max-w-none prose-headings:text-neutral-900 dark:prose-headings:text-white prose-p:text-neutral-900 dark:prose-p:text-white prose-li:text-neutral-900 dark:prose-li:text-white">
                 <h2>Project Overview</h2>
                 <p>{project.content.overview}</p>
 
