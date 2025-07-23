@@ -11,41 +11,35 @@ interface ImageCarouselProps {
 
 const ImageCarousel = ({ projectId, images, className = '' }: ImageCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [autoPlayInterval, setAutoPlayInterval] = useState(4000); // Default 4 seconds
+  const [isHovered, setIsHovered] = useState(false);
+  const [intervalDuration, setIntervalDuration] = useState(4000);
 
   // Auto-play functionality
   useEffect(() => {
-    if (!isAutoPlaying || images.length <= 1) return;
+    if (images.length <= 1 || isHovered) return;
 
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, autoPlayInterval);
+    }, intervalDuration);
 
     return () => clearInterval(interval);
-  }, [isAutoPlaying, images.length, autoPlayInterval, currentIndex]);
+  }, [images.length, isHovered, intervalDuration, currentIndex]);
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) => 
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
-    // Reset auto-play timer to 10 seconds after manual interaction
-    setAutoPlayInterval(10000);
-    setIsAutoPlaying(true);
+    setIntervalDuration(10000); // 10 seconds after manual control
   };
 
   const goToNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    // Reset auto-play timer to 10 seconds after manual interaction
-    setAutoPlayInterval(10000);
-    setIsAutoPlaying(true);
+    setIntervalDuration(10000); // 10 seconds after manual control
   };
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
-    // Reset auto-play timer to 10 seconds after manual interaction
-    setAutoPlayInterval(10000);
-    setIsAutoPlaying(true);
+    setIntervalDuration(10000); // 10 seconds after manual control
   };
 
   if (images.length === 0) {
@@ -59,8 +53,8 @@ const ImageCarousel = ({ projectId, images, className = '' }: ImageCarouselProps
   return (
     <div 
       className={`relative group ${className}`}
-      onMouseEnter={() => images.length > 1 && setIsAutoPlaying(false)}
-      onMouseLeave={() => setIsAutoPlaying(true)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {/* Main Image Container */}
       <div className="relative aspect-video overflow-hidden rounded-lg bg-neutral-100 dark:bg-neutral-800">
@@ -74,52 +68,52 @@ const ImageCarousel = ({ projectId, images, className = '' }: ImageCarouselProps
           }}
         />
         
-        {/* Navigation Arrows */}
+        {/* Navigation Arrows - Show when multiple images and on hover */}
         {images.length > 1 && (
           <>
             <button
               onClick={goToPrevious}
-              className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/60 hover:bg-black/80 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 z-10"
               aria-label="Previous image"
             >
-              <ChevronLeft size={16} />
+              <ChevronLeft size={20} />
             </button>
             <button
               onClick={goToNext}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/60 hover:bg-black/80 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 z-10"
               aria-label="Next image"
             >
-              <ChevronRight size={16} />
+              <ChevronRight size={20} />
             </button>
           </>
         )}
 
-        {/* Auto-play pause indicator */}
-        {!isAutoPlaying && images.length > 1 && (
-          <div className="absolute top-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            Paused
+        {/* Image Counter */}
+        {images.length > 1 && (
+          <div className="absolute top-3 right-3 bg-black/60 text-white text-sm px-3 py-1 rounded-full">
+            {currentIndex + 1} / {images.length}
           </div>
         )}
 
-        {/* Image Counter */}
-        {images.length > 1 && (
-          <div className="absolute top-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
-            {currentIndex + 1} / {images.length}
+        {/* Pause Indicator */}
+        {isHovered && images.length > 1 && (
+          <div className="absolute top-3 left-3 bg-black/60 text-white text-xs px-2 py-1 rounded">
+            Paused
           </div>
         )}
       </div>
 
       {/* Dots Indicator */}
       {images.length > 1 && (
-        <div className="flex justify-center space-x-2 mt-3">
+        <div className="flex justify-center space-x-2 mt-4">
           {images.map((_, index) => (
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              className={`h-2 rounded-full transition-all duration-300 ${
                 index === currentIndex
-                  ? 'bg-primary-600 dark:bg-primary-400 w-6'
-                  : 'bg-neutral-300 dark:bg-neutral-600 hover:bg-neutral-400 dark:hover:bg-neutral-500'
+                  ? 'bg-primary-600 dark:bg-primary-400 w-8'
+                  : 'bg-neutral-300 dark:bg-neutral-600 hover:bg-neutral-400 dark:hover:bg-neutral-500 w-2'
               }`}
               aria-label={`Go to image ${index + 1}`}
             />
@@ -128,7 +122,7 @@ const ImageCarousel = ({ projectId, images, className = '' }: ImageCarouselProps
       )}
 
       {/* Image Caption */}
-      <div className="mt-2 text-center">
+      <div className="mt-3 text-center">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           {images[currentIndex].caption}
         </p>
