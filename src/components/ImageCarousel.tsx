@@ -20,10 +20,10 @@ const ImageCarousel = ({ projectId, images, className = '' }: ImageCarouselProps
 
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 4000);
+    }, autoPlayInterval);
 
     return () => clearInterval(interval);
-  }, [isAutoPlaying, images.length, autoPlayInterval]);
+  }, [isAutoPlaying, images.length, autoPlayInterval, currentIndex]);
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) => 
@@ -59,7 +59,7 @@ const ImageCarousel = ({ projectId, images, className = '' }: ImageCarouselProps
   return (
     <div 
       className={`relative group ${className}`}
-      onMouseEnter={() => setIsAutoPlaying(false)}
+      onMouseEnter={() => images.length > 1 && setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
       {/* Main Image Container */}
@@ -92,6 +92,13 @@ const ImageCarousel = ({ projectId, images, className = '' }: ImageCarouselProps
               <ChevronRight size={16} />
             </button>
           </>
+        )}
+
+        {/* Auto-play pause indicator */}
+        {!isAutoPlaying && images.length > 1 && (
+          <div className="absolute top-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            Paused
+          </div>
         )}
 
         {/* Image Counter */}
