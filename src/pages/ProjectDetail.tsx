@@ -1,7 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, MapPin, User, Wrench, ExternalLink } from 'lucide-react';
 import { getProjectById, getProjectImagePath } from '../data/projects';
-import Navbar from '../components/Navbar';
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -13,11 +12,9 @@ const ProjectDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-800 pt-16">
-      <Navbar />
-      
+    <div className="pt-16">
       {/* Back Button Section */}
-      <div className="bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
+      <div className="fixed top-16 left-0 right-0 z-40 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-700">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <Link
             to="/portfolio"
@@ -29,10 +26,10 @@ const ProjectDetail = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-24">
 
         {/* Main Container */}
-        <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-xl overflow-hidden min-h-screen">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
             {/* Left Column - Content */}
             <div className="lg:col-span-2 p-8 lg:p-12">
@@ -100,7 +97,27 @@ const ProjectDetail = () => {
               </section>
 
               {/* Main Description */}
-              <article className="prose prose-lg dark:prose-invert max-w-none prose-headings:text-neutral-900 dark:prose-headings:text-white prose-p:text-neutral-900 dark:prose-p:text-white prose-li:text-neutral-900 dark:prose-li:text-white">
+              <article className="prose prose-lg max-w-none">
+                <style jsx>{`
+                  .prose h2 {
+                    color: #111827 !important;
+                  }
+                  .prose p {
+                    color: #111827 !important;
+                  }
+                  .prose li {
+                    color: #111827 !important;
+                  }
+                  .dark .prose h2 {
+                    color: #ffffff !important;
+                  }
+                  .dark .prose p {
+                    color: #ffffff !important;
+                  }
+                  .dark .prose li {
+                    color: #ffffff !important;
+                  }
+                `}</style>
                 <h2>Project Overview</h2>
                 <p>{project.content.overview}</p>
 
@@ -121,7 +138,7 @@ const ProjectDetail = () => {
 
             {/* Right Column - Image Gallery */}
             <aside className="lg:col-span-1 bg-neutral-50 dark:bg-neutral-800 p-8">
-              <div className="lg:sticky lg:top-20 space-y-6">
+              <div className="lg:sticky lg:top-32 space-y-6">
                 <h3 className="font-display text-xl font-bold text-neutral-900 dark:text-white mb-6">
                   Project Gallery
                 </h3>
