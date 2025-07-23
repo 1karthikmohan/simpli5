@@ -12,6 +12,7 @@ interface ImageCarouselProps {
 const ImageCarousel = ({ projectId, images, className = '' }: ImageCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [autoPlayInterval, setAutoPlayInterval] = useState(4000); // Default 4 seconds
 
   // Auto-play functionality
   useEffect(() => {
@@ -22,20 +23,29 @@ const ImageCarousel = ({ projectId, images, className = '' }: ImageCarouselProps
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [isAutoPlaying, images.length]);
+  }, [isAutoPlaying, images.length, autoPlayInterval]);
 
   const goToPrevious = () => {
     setCurrentIndex((prevIndex) => 
       prevIndex === 0 ? images.length - 1 : prevIndex - 1
     );
+    // Reset auto-play timer to 10 seconds after manual interaction
+    setAutoPlayInterval(10000);
+    setIsAutoPlaying(true);
   };
 
   const goToNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    // Reset auto-play timer to 10 seconds after manual interaction
+    setAutoPlayInterval(10000);
+    setIsAutoPlaying(true);
   };
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
+    // Reset auto-play timer to 10 seconds after manual interaction
+    setAutoPlayInterval(10000);
+    setIsAutoPlaying(true);
   };
 
   if (images.length === 0) {
