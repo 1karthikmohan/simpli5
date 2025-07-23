@@ -1,69 +1,9 @@
 import { ExternalLink, Calendar, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import ImageCarousel from '../components/ImageCarousel';
+import { projects } from '../data/projects';
 
 const Portfolio = () => {
-  const projects = [
-    {
-      id: 1,
-      title: 'Modern Family Residence',
-      category: 'Residential',
-      location: 'Mysore, Karnataka',
-      year: '2023',
-      description: 'A contemporary family home that seamlessly blends indoor and outdoor living spaces.',
-      image: 'https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=800',
-      tags: ['Modern', 'Sustainable', 'Family Home']
-    },
-    {
-      id: 2,
-      title: 'Corporate Office Complex',
-      category: 'Commercial',
-      location: 'Bangalore, Karnataka',
-      year: '2023',
-      description: 'A state-of-the-art office complex designed to foster collaboration and productivity.',
-      image: 'https://images.pexels.com/photos/2883049/pexels-photo-2883049.jpeg?auto=compress&cs=tinysrgb&w=800',
-      tags: ['Corporate', 'Modern', 'Sustainable']
-    },
-    {
-      id: 3,
-      title: 'Heritage Villa Restoration',
-      category: 'Restoration',
-      location: 'Mysore, Karnataka',
-      year: '2022',
-      description: 'Careful restoration of a colonial-era villa while adding modern amenities.',
-      image: 'https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&cs=tinysrgb&w=800',
-      tags: ['Heritage', 'Restoration', 'Classic']
-    },
-    {
-      id: 4,
-      title: 'Boutique Hotel Design',
-      category: 'Hospitality',
-      location: 'Coorg, Karnataka',
-      year: '2022',
-      description: 'A luxury boutique hotel that celebrates local culture and natural beauty.',
-      image: 'https://images.pexels.com/photos/2029667/pexels-photo-2029667.jpeg?auto=compress&cs=tinysrgb&w=800',
-      tags: ['Hospitality', 'Luxury', 'Cultural']
-    },
-    {
-      id: 5,
-      title: 'Minimalist Apartment',
-      category: 'Interior',
-      location: 'Mysore, Karnataka',
-      year: '2023',
-      description: 'Clean, minimalist interior design that maximizes space and natural light.',
-      image: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=800',
-      tags: ['Minimalist', 'Interior', 'Modern']
-    },
-    {
-      id: 6,
-      title: 'Sustainable Community Center',
-      category: 'Public',
-      location: 'Hassan, Karnataka',
-      year: '2021',
-      description: 'An eco-friendly community center built with local materials and sustainable practices.',
-      image: 'https://images.pexels.com/photos/2102587/pexels-photo-2102587.jpeg?auto=compress&cs=tinysrgb&w=800',
-      tags: ['Sustainable', 'Community', 'Eco-friendly']
-    }
-  ];
 
   return (
     <div className="pt-16">
@@ -87,14 +27,14 @@ const Portfolio = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projects.map((project) => (
               <div key={project.id} className="group bg-neutral-50 dark:bg-neutral-800 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                <div className="relative overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                <div className="relative overflow-hidden p-4 pb-0">
+                  <ImageCarousel
+                    projectId={project.id}
+                    images={project.images}
+                    className="group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-4 right-4">
+                    <div className="absolute bottom-8 right-8">
                       <Link 
                         to={`/project/${project.id}`}
                         className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors duration-300"
